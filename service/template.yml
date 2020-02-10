@@ -1,0 +1,37 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: 'AWS::Serverless-2016-10-31'
+
+Description: multi-stack-poc
+
+Resources:
+  GetCertificates:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Description: Lambda for getting a list of all existing certificates
+      FunctionName: !Sub "multi-stack-poc-GetCertificates"
+      Handler: "com.wirelesscar.vw.tscs.functions.GetCertificates::handleRequest"
+      Role: !GetAtt GetCertificatesRole.Arn
+      Runtime: java8
+      Tracing: Active
+
+  GetCertificatesRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: !Sub 'multi-stack-poc-GetCertificatesRole'
+      AssumeRolePolicyDocument:
+        Statement:
+          Action: 'sts:AssumeRole'
+          Effect: Allow
+          Principal:
+            Service: lambda.amazonaws.com
+      ManagedPolicyArns:
+        - !Sub 'arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+        - Fn::ImportValue: !Sub "multi-stack-poc-ReadCertificatesTablePolicy"
+      Policies:
+        - PolicyName: !Sub "multi-stack-poc-GetCertificatesRole-policy"
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'sts:AssumeRole'
+                Resource: !Ref ConfigRole

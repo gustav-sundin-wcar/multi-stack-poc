@@ -1,0 +1,69 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+
+Description: DynamoDB for multi-stack-poc
+
+Resources:
+  CertificatesTable:
+    Type: 'AWS::DynamoDB::Table'
+    DeletionPolicy: Retain
+    Properties:
+      TableName: !Sub 'multi-stack-poc-truststorecontainer-service-certificates'
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      AttributeDefinitions:
+        - AttributeName: 'id'
+          AttributeType: 'S'
+      KeySchema:
+        - AttributeName: 'id'
+          KeyType: 'HASH'
+      ProvisionedThroughput:
+        ReadCapacityUnits: '5'
+        WriteCapacityUnits: '5'
+      SSESpecification:
+        SSEEnabled:
+            true
+
+  WriteCertificatesTablePolicy:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      ManagedPolicyName: !Sub "multi-stack-poc-WriteCertificatesPolicy"
+      Description: "Policy for writing certificates table"
+      Path: "/"
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Action:
+              - "dynamodb:PutItem"
+              - "dynamodb:UpdateItem"
+              - "dynamodb:GetItem"
+            Resource: !Sub 'arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/multi-stack-poc-truststorecontainer-service-certificates'
+
+  ReadCertificatesTablePolicy:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      ManagedPolicyName: !Sub "multi-stack-poc-ReadCertificatesTablePolicy"
+      Description: "Policy for reading certificates table"
+      Path: "/"
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Action:
+              - "dynamodb:GetItem"
+              - "dynamodb:Query"
+              - "dynamodb:Scan"
+            Resource: !Sub 'arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/multi-stack-poc-truststorecontainer-service-certificates'
+
+Outputs:
+  WriteCertificatesTablePolicyName:
+    Description: Policy for writing to certificates table
+    Value: !Ref WriteCertificatesTablePolicy
+    Export:
+      Name: !Sub "multi-stack-poc-WriteCertificatesPolicy"
+  ReadCertificatesTablePolicyName:
+    Description: Policy for reading certificates table
+    Value: !Ref ReadCertificatesTablePolicy
+    Export:
+      Name: !Sub "multi-stack-poc-ReadCertificatesTablePolicy"

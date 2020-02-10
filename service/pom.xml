@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.wirelesscar.vw.tscsl</groupId>
+  <artifactId>multi-stack-poc</artifactId>
+  <version>0-SNAPSHOT</version>
+
+  <packaging>jar</packaging>
+  <name>Trust Store Container Service</name>
+  <description>
+    Providing Trust Store Containers to vehicles
+  </description>
+
+  <properties>
+    <!-- Master POM -->
+    <slf4j.version>1.7.27</slf4j.version>
+    <jackson.version>2.10.1</jackson.version>
+
+    <aws-java-sdk.version>1.11.682</aws-java-sdk.version>
+    <software.amazon.awssdk.version>2.10.24</software.amazon.awssdk.version>
+    <aws-lambda-java-core.version>1.2.0</aws-lambda-java-core.version>
+    <aws-lambda-java-events.version>2.2.7</aws-lambda-java-events.version>
+
+    <junit.version>4.13-rc-1</junit.version>
+    <!-- -->
+
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+
+    <!-- AWS -->
+    <aws-java-sdk-bom.version>1.11.642</aws-java-sdk-bom.version>
+    <aws-xray-recorder.version>2.4.0</aws-xray-recorder.version>
+
+    <!-- Common -->
+    <log4j.version>2.13.0</log4j.version>
+
+    <!-- Test -->
+    <mockito-all.version>2.0.2-beta</mockito-all.version>
+    <sqlite.version>1.0.392</sqlite.version>
+    <wiremock.version>2.25.0</wiremock.version>
+    <gson.version>2.8.5.redhat-00001</gson.version>
+
+    <!-- Maven Plugins -->
+    <maven-shade-plugin.version>3.2.1</maven-shade-plugin.version>
+    <maven-shade-plugin.log4j2-cachefile-transformer.version>2.8.1
+    </maven-shade-plugin.log4j2-cachefile-transformer.version>
+
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- Master POM -->
+      <dependency>
+        <groupId>com.amazonaws</groupId>
+        <artifactId>aws-lambda-java-core</artifactId>
+        <version>${aws-lambda-java-core.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.amazonaws</groupId>
+        <artifactId>aws-lambda-java-events</artifactId>
+        <version>${aws-lambda-java-events.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${junit.version}</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>com.fasterxml.jackson</groupId>
+        <artifactId>jackson-bom</artifactId>
+        <version>${jackson.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+        <exclusions>
+          <exclusion>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <!-- -->
+
+      <dependency>
+        <groupId>com.amazonaws</groupId>
+        <artifactId>aws-java-sdk-bom</artifactId>
+        <version>${aws-java-sdk-bom.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.amazonaws</groupId>
+        <artifactId>aws-xray-recorder-sdk-bom</artifactId>
+        <version>${aws-xray-recorder.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.netty</groupId>
+        <artifactId>netty-bom</artifactId>
+        <version>4.1.45.Final</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+
+  <dependencies>
+    <!-- AWS -->
+    <dependency>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>aws-lambda-java-events</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>aws-lambda-java-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>aws-java-sdk-dynamodb</artifactId>
+    </dependency>
+
+    <!-- Common -->
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-api</artifactId>
+      <version>${log4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>${log4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-slf4j-impl</artifactId>
+      <version>${log4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>28.2-jre</version>
+    </dependency>
+
+    <!-- Test -->
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-all</artifactId>
+      <version>${mockito-all.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>DynamoDBLocal</artifactId>
+      <version>1.12.0</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.eclipse.jetty</groupId>
+          <artifactId>jetty-server</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.eclipse.jetty</groupId>
+          <artifactId>jetty-client</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.almworks.sqlite4java</groupId>
+      <artifactId>sqlite4java</artifactId>
+      <version>${sqlite.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.github.tomakehurst</groupId>
+      <artifactId>wiremock</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>com.google.guava</groupId>
+          <artifactId>guava</artifactId>
+        </exclusion>
+      </exclusions>
+      <version>${wiremock.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>${gson.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>${maven-shade-plugin.version}</version>
+        <configuration>
+          <createDependencyReducedPom>false</createDependencyReducedPom>
+          <finalName>${project.artifactId}-shaded-${project.version}</finalName>
+          <transformers>
+            <transformer
+              implementation="com.github.edwgiz.mavenShadePlugin.log4j2CacheTransformer.PluginsCacheFileTransformer">
+            </transformer>
+            <transformer
+              implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+          </transformers>
+          <shadedArtifactAttached>true</shadedArtifactAttached>
+          <shadedClassifierName>jar-with-dependencies</shadedClassifierName>
+          <filters>
+          </filters>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>com.github.edwgiz</groupId>
+            <artifactId>maven-shade-plugin.log4j2-cachefile-transformer</artifactId>
+            <version>${maven-shade-plugin.log4j2-cachefile-transformer.version}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>2.10</version>
+        <executions>
+          <execution>
+            <id>copy</id>
+            <phase>test-compile</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <includeScope>test</includeScope>
+              <includeTypes>so,dll,dylib</includeTypes>
+              <outputDirectory>${project.basedir}/target/native-libs</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
