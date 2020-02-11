@@ -6,6 +6,7 @@ Description: multi-stack-poc
 Parameters:
   BuildId:
     Type: String
+    Default: "MISSINGBUILDID"
 
 Resources:
   GetCertificates:
