@@ -27,4 +27,6 @@ Resources:
             Service: lambda.amazonaws.com
       ManagedPolicyArns:
         - !Sub 'arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+        - arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess
+        - arn:aws:iam::aws:policy/CloudWatchLogsFullAccess
         - Fn::ImportValue: !Sub "multi-stack-poc-ReadCertificatesTablePolicy"
