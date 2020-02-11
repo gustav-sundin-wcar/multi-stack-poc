@@ -47,7 +47,7 @@ jobs:
       run: |
         cd service
         aws cloudformation package --template-file template.yml --output-template-file serverless-output.yaml --s3-bucket wirelesscar-multi-stack-poc-serverless-deployment-bucket
-        aws cloudformation deploy --template-file serverless-output.yaml --stack-name multi-stack-poc --s3-bucket wirelesscar-multi-stack-poc-serverless-deployment-bucket
+        aws cloudformation deploy --template-file serverless-output.yaml --stack-name multi-stack-poc --s3-bucket wirelesscar-multi-stack-poc-serverless-deployment-bucket --capabilities CAPABILITY_NAMED_IAM
  
 #     - name: CloudFormation Deploy Old
 #       uses: mgenteluci/cloudformation-deploy-action@v1.3.0
