@@ -32,7 +32,6 @@
 
     <!-- AWS -->
     <aws-java-sdk-bom.version>1.11.642</aws-java-sdk-bom.version>
-    <aws-xray-recorder.version>2.4.0</aws-xray-recorder.version>
 
     <!-- Common -->
     <log4j.version>2.13.0</log4j.version>
@@ -96,13 +95,6 @@
         <groupId>com.amazonaws</groupId>
         <artifactId>aws-java-sdk-bom</artifactId>
         <version>${aws-java-sdk-bom.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>com.amazonaws</groupId>
-        <artifactId>aws-xray-recorder-sdk-bom</artifactId>
-        <version>${aws-xray-recorder.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
