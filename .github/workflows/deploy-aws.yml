@@ -42,7 +42,7 @@ jobs:
     - name: Upload to S3 Bucket
       run: |
         cd service/target
-        aws s3 cp multi-stack-poc-shaded-${GITHUB_SHA}-SNAPSHOT.jar s3://wirelesscar-multi-stack-poc-serverless-deployment-bucket/
+        aws s3 cp multi-stack-poc-shaded-0-SNAPSHOT.jar s3://wirelesscar-multi-stack-poc-serverless-deployment-bucket/multi-stack-poc-shaded-${GITHUB_SHA}-SNAPSHOT.jar
         
     - name: Cloudformation Deploy
       run: |
