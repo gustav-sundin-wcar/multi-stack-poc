@@ -18,7 +18,6 @@
     <slf4j.version>1.7.27</slf4j.version>
     <jackson.version>2.10.1</jackson.version>
 
-    <aws-java-sdk.version>1.11.682</aws-java-sdk.version>
     <software.amazon.awssdk.version>2.10.24</software.amazon.awssdk.version>
     <aws-lambda-java-core.version>1.2.0</aws-lambda-java-core.version>
     <aws-lambda-java-events.version>2.2.7</aws-lambda-java-events.version>
@@ -109,7 +108,7 @@
       <dependency>
         <groupId>org.apache.httpcomponents</groupId>
         <artifactId>httpclient</artifactId>
-        <version>4.5.10</version>
+        <version>4.5.11</version>
       </dependency>
 
     </dependencies>
