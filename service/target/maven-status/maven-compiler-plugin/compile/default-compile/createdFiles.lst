@@ -1,9 +1,0 @@
-com/wirelesscar/vw/tscs/functions/GetCertificates.class
-com/wirelesscar/vw/tscs/rest/model/ResponseCertificates.class
-com/wirelesscar/vw/tscs/db/DynamoDbRepository.class
-com/wirelesscar/vw/tscs/db/Repository.class
-com/wirelesscar/vw/tscs/db/model/Certificate.class
-com/wirelesscar/vw/tscs/rest/APIResponseCreator.class
-com/wirelesscar/vw/tscs/db/DatabaseHandler.class
-com/wirelesscar/vw/tscs/rest/model/APIErrorMessage.class
-com/wirelesscar/vw/tscs/rest/model/ResponseCertificate.class

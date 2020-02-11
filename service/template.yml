@@ -10,6 +10,7 @@ Resources:
       Description: Lambda for getting a list of all existing certificates
       FunctionName: !Sub "multi-stack-poc-GetCertificates"
       Handler: "com.wirelesscar.vw.tscs.functions.GetCertificates::handleRequest"
+      CodeUri: s3://wirelesscar-multi-stack-poc-serverless-deployment-bucket/multi-stack-poc-shaded-0-SNAPSHOT.jar
       Role: !GetAtt GetCertificatesRole.Arn
       Runtime: java8
       Tracing: Active
