@@ -18,7 +18,6 @@
     <slf4j.version>1.7.27</slf4j.version>
     <jackson.version>2.10.1</jackson.version>
 
-    <software.amazon.awssdk.version>2.10.24</software.amazon.awssdk.version>
     <aws-lambda-java-core.version>1.2.0</aws-lambda-java-core.version>
     <aws-lambda-java-events.version>2.2.7</aws-lambda-java-events.version>
 
@@ -35,8 +34,6 @@
     <!-- Common -->
     <log4j.version>2.13.0</log4j.version>
 
-    <!-- Test -->
-    <mockito-all.version>2.0.2-beta</mockito-all.version>
 
     <!-- Maven Plugins -->
     <maven-shade-plugin.version>3.2.1</maven-shade-plugin.version>
@@ -157,12 +154,6 @@
     </dependency>
 
     <!-- Test -->
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-all</artifactId>
-      <version>${mockito-all.version}</version>
-      <scope>test</scope>
-    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
