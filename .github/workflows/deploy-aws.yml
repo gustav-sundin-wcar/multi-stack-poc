@@ -42,13 +42,19 @@ jobs:
       run: |
         cd service/target
         aws s3 cp multi-stack-poc-shaded-0-SNAPSHOT.jar s3://wirelesscar-multi-stack-poc-serverless-deployment-bucket/
+        
+    - name: Cloudformation Deploy
+      run: |
+        cd service
+        aws cloudformation package --template-file template.yml --output-template-file serverless-output.yaml --s3-bucket wirelesscar-multi-stack-poc-serverless-deployment-bucket
+        aws cloudformation deploy --template-file serverless-output.yaml --stack-name multi-stack-poc --s3-bucket wirelesscar-multi-stack-poc-serverless-deployment-bucket
  
-    - name: CloudFormation Deploy
-      uses: mgenteluci/cloudformation-deploy-action@v1.3.0
-      env:
-        TEMPLATE: 'service/template.yml'
-        AWS_STACK_NAME: 'multi-stack-poc'
-        AWS_REGION: 'eu-west-1'
-        AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
-        AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-        AWS_DEPLOY_BUCKET: ${{secrets.AWS_DEPLOY_BUCKET}}
+#     - name: CloudFormation Deploy Old
+#       uses: mgenteluci/cloudformation-deploy-action@v1.3.0
+#       env:
+#         TEMPLATE: 'service/template.yml'
+#         AWS_STACK_NAME: 'multi-stack-poc'
+#         AWS_REGION: 'eu-west-1'
+#         AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+#         AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+#         AWS_DEPLOY_BUCKET: ${{secrets.AWS_DEPLOY_BUCKET}}
