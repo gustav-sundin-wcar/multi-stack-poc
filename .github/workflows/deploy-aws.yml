@@ -24,6 +24,7 @@ jobs:
         
     - name: Build java files
       run: |
+        cd service
         mvn package
  
     - name: CloudFormation Deploy
