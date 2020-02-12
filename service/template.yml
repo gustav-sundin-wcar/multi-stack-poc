@@ -22,7 +22,7 @@ Resources:
       Runtime: java8
       Tracing: Active
       MemorySize: 512
-      Timeout: 10
+      Timeout: 30
 
   GetCertificatesRole:
     Type: 'AWS::IAM::Role'
