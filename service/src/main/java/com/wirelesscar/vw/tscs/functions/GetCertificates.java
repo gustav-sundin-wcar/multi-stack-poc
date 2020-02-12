@@ -14,6 +14,7 @@ import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,9 +25,17 @@ public class GetCertificates implements RequestHandler<APIGatewayProxyRequestEve
 
   @Override
   public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent request, Context context) {
-    LOG.debug("Starting executing {} Lambda", LAMBDA_NAME);
+    LOG.warn("Starting executing {} Lambda", LAMBDA_NAME);
+    System.out.println("Wrong!!");
+    //APIGatewayProxyResponseEvent response = getCertificates(context);
+    APIGatewayProxyResponseEvent response = null;
+    try {
+      response = APIResponseCreator.buildSuccessfulResponseEvent(HttpStatus.SC_OK, new ResponseCertificates(new ArrayList<>()).toJSON());
+    } catch (JsonProcessingException e) {
+      e.printStackTrace();
+      response = handleError(e, HttpStatus.SC_INTERNAL_SERVER_ERROR);
+    }
 
-    APIGatewayProxyResponseEvent response = getCertificates(context);
 
     return response;
   }
