@@ -6,6 +6,8 @@ import com.google.common.annotations.VisibleForTesting;
 import com.wirelesscar.vw.tscs.db.model.Certificate;
 import javax.annotation.Nullable;
 import java.util.List;
+import com.amazonaws.xray.AWSXRay;
+import com.amazonaws.xray.handlers.TracingHandler;
 
 public final class DatabaseHandler {
   private AmazonDynamoDB dynamoDBClient;
@@ -27,7 +29,7 @@ public final class DatabaseHandler {
 
   private DatabaseHandler() {
     if (dynamoDBClient == null) {
-      dynamoDBClient = AmazonDynamoDBClientBuilder.standard().build();
+      dynamoDBClient = AmazonDynamoDBClientBuilder.standard().withRequestHandlers(new TracingHandler(AWSXRay.getGlobalRecorder())).build();
       System.out.println("Successfully initiated dynamoDBClient");
     }
     setDynamoDBClient(dynamoDBClient);
