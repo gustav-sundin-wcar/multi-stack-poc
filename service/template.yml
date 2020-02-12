@@ -16,7 +16,7 @@ Resources:
       FunctionName: !Sub "multi-stack-poc-GetCertificates"
       Handler: "com.wirelesscar.vw.tscs.functions.GetCertificates::handleRequest"
       CodeUri:
-        Bucket: s3://wirelesscar-multi-stack-poc-serverless-deployment-bucket
+        Bucket: wirelesscar-multi-stack-poc-serverless-deployment-bucket
         Key: !Sub multi-stack-poc-shaded-${BuildId}-SNAPSHOT.jar
       Role: !GetAtt GetCertificatesRole.Arn
       Runtime: java8
