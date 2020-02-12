@@ -25,13 +25,21 @@ jobs:
     - name: Cloudformation Database Deploy
       run: |
         cd database
-        aws cloudformation package --template-file template.yml --output-template-file database-output.yaml --s3-bucket wirelesscar-multi-stack-poc-serverless-deployment-bucket
-        aws cloudformation deploy --template-file database-output.yaml --stack-name multi-stack-poc-db --s3-bucket wirelesscar-multi-stack-poc-serverless-deployment-bucket --capabilities CAPABILITY_NAMED_IAM  --no-fail-on-empty-changeset
+        aws cloudformation package \
+          --template-file template.yml \
+          --output-template-file database-output.yaml \
+          --s3-bucket wirelesscar-multi-stack-poc-serverless-deployment-bucket
+
+        aws cloudformation deploy \
+          --template-file database-output.yaml \
+          --stack-name multi-stack-poc-db \
+          --s3-bucket wirelesscar-multi-stack-poc-serverless-deployment-bucket \
+          --capabilities CAPABILITY_NAMED_IAM \
+          --no-fail-on-empty-changeset
 
     - name: Setup Java JDK
       uses: actions/setup-java@v1.3.0
       with:
-        # The Java version to make available on the path. Takes a whole or semver Java version, or 1.x syntax (e.g. 1.8 => Java 8.x)
         java-version: 1.8
         
     - name: Build java files
@@ -47,6 +55,16 @@ jobs:
     - name: Cloudformation Deploy
       run: |
         cd service
-        aws cloudformation package --template-file template.yml --output-template-file serverless-output.yaml --s3-bucket wirelesscar-multi-stack-poc-serverless-deployment-bucket
-        aws cloudformation deploy --template-file serverless-output.yaml --stack-name multi-stack-poc-service --s3-bucket wirelesscar-multi-stack-poc-serverless-deployment-bucket --capabilities CAPABILITY_NAMED_IAM --parameter-overrides BuildId=$GITHUB_SHA --no-fail-on-empty-changeset
+        aws cloudformation package \
+          --template-file template.yml \
+          --output-template-file serverless-output.yaml \
+          --s3-bucket wirelesscar-multi-stack-poc-serverless-deployment-bucket
+
+        aws cloudformation deploy \
+          --template-file serverless-output.yaml \
+          --stack-name multi-stack-poc-service \
+          --s3-bucket wirelesscar-multi-stack-poc-serverless-deployment-bucket \
+          --capabilities CAPABILITY_NAMED_IAM \
+          --parameter-overrides BuildId=$GITHUB_SHA \
+          --no-fail-on-empty-changeset
  
