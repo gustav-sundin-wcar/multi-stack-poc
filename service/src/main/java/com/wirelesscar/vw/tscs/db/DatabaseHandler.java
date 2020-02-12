@@ -4,15 +4,11 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.google.common.annotations.VisibleForTesting;
 import com.wirelesscar.vw.tscs.db.model.Certificate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.annotation.Nullable;
 import java.util.List;
 
 public final class DatabaseHandler {
   private AmazonDynamoDB dynamoDBClient;
-  private final Logger LOG = LoggerFactory.getLogger(DatabaseHandler.class);
 
   private static final String TABLE_BASE_NAME = "multi-stack-poc-truststorecontainer-service-";
   private static final String CERTIFICATE_TABLE_NAME = TABLE_BASE_NAME + "certificates";
@@ -32,13 +28,12 @@ public final class DatabaseHandler {
   private DatabaseHandler() {
     if (dynamoDBClient == null) {
       dynamoDBClient = AmazonDynamoDBClientBuilder.standard().build();
-      LOG.debug("Successfully initiated dynamoDBClient");
+      System.out.println("Successfully initiated dynamoDBClient");
     }
     setDynamoDBClient(dynamoDBClient);
   }
 
   public void saveCertificate(Certificate certificate) {
-    LOG.debug("saveCertificate: certificate {}", certificate);
     certificateRepository.save(certificate);
   }
 
@@ -53,7 +48,6 @@ public final class DatabaseHandler {
 
   @VisibleForTesting
   public void setDynamoDBClient(AmazonDynamoDB dynamoDBClient) {
-    LOG.debug("Successfully overwrote dynamoDbClient");
     this.dynamoDBClient = dynamoDBClient;
     this.certificateRepository = new DynamoDbRepository<>(dynamoDBClient, Certificate.class, CERTIFICATE_TABLE_NAME);
   }

@@ -4,8 +4,6 @@ import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -15,7 +13,6 @@ import java.util.regex.Pattern;
 public class Certificate {
   private String id;
   private String certificateData;
-  private static final Logger LOG = LoggerFactory.getLogger(Certificate.class);
 
   @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
   private Date createdAt;

@@ -11,22 +11,18 @@ import com.wirelesscar.vw.tscs.rest.model.ResponseCertificate;
 import com.wirelesscar.vw.tscs.rest.APIResponseCreator;
 import com.wirelesscar.vw.tscs.rest.model.ResponseCertificates;
 import org.apache.http.HttpStatus;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class GetCertificates implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
-  private static final Logger LOG = LoggerFactory.getLogger(GetCertificates.class);
 
   private static final String LAMBDA_NAME = "GetCertificates";
 
   @Override
   public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent request, Context context) {
-    LOG.warn("Starting executing {} Lambda", LAMBDA_NAME);
-    System.out.println("Wrong!!");
+    System.out.println("Start executing lamdba" + LAMBDA_NAME);
     //APIGatewayProxyResponseEvent response = getCertificates(context);
     APIGatewayProxyResponseEvent response = null;
     try {
@@ -46,7 +42,6 @@ public class GetCertificates implements RequestHandler<APIGatewayProxyRequestEve
 
     try {
       APIGatewayProxyResponseEvent response = APIResponseCreator.buildSuccessfulResponseEvent(HttpStatus.SC_OK, new ResponseCertificates(certificates).toJSON());
-      LOG.debug("Successfully executed {}} Lambda", LAMBDA_NAME);
       return response;
     } catch (JsonProcessingException e) {
       return handleError(e, HttpStatus.SC_INTERNAL_SERVER_ERROR);
@@ -58,7 +53,6 @@ public class GetCertificates implements RequestHandler<APIGatewayProxyRequestEve
   }
 
   private APIGatewayProxyResponseEvent handleError(Exception e, int httpStatus) {
-    LOG.error("Got exception in {} {}", LAMBDA_NAME, e.getMessage(), e);
 
     return APIResponseCreator.buildErrorResponse(httpStatus, e.getMessage());
   }
