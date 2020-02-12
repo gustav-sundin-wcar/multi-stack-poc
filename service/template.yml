@@ -47,3 +47,33 @@ Resources:
                 Action:
                   - 'sts:AssumeRole'
                 Resource: !Ref ConfigRole
+
+
+  # API
+  TrustStoreContainerServiceAPI:
+    Type: "AWS::ApiGateway::RestApi"
+    Properties:
+      Name: !Sub "multi-stack-poc"
+      Parameters:
+        endpointConfigurationTypes: REGIONAL
+      EndpointConfiguration:
+        Types:
+          - REGIONAL
+      Body:
+        openapi: 3.0.0
+        info:
+          title: !Sub "multi-stack-poc-Trust Store Container Service API"
+        paths:
+
+          /certificates:
+            get:
+              summary: Endpoint to get a list of all certificates
+              operationId: "getCertificates"
+              consumes:
+                - application/json
+              headers:
+                - Content-Type: "application/json"
+              x-amazon-apigateway-integration:
+                uri: !Sub 'arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetCertificates.Arn}/invocations'
+                httpMethod: "POST"
+                type: aws_proxy
