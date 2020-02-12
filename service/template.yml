@@ -39,15 +39,6 @@ Resources:
         - arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess
         - arn:aws:iam::aws:policy/CloudWatchLogsFullAccess
         - Fn::ImportValue: !Sub "multi-stack-poc-ReadCertificatesTablePolicy"
-      Policies:
-        - PolicyName: !Sub "multi-stack-poc-GetCertificatesRole-policy"
-          PolicyDocument:
-            Statement:
-              - Effect: Allow
-                Action:
-                  - 'sts:AssumeRole'
-                Resource: !Ref ConfigRole
-
 
   # API
   TrustStoreContainerServiceAPI:
