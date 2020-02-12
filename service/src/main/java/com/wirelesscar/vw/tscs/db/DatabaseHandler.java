@@ -43,6 +43,7 @@ public final class DatabaseHandler {
   }
 
   public List<Certificate> findAllCertificates() {
+    System.out.println("Find all certificates");
     return certificateRepository.findAll(Certificate.class);
   }
 

@@ -23,15 +23,12 @@ public class GetCertificates implements RequestHandler<APIGatewayProxyRequestEve
   @Override
   public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent request, Context context) {
     System.out.println("Start executing lamdba" + LAMBDA_NAME);
-    //APIGatewayProxyResponseEvent response = getCertificates(context);
-    APIGatewayProxyResponseEvent response = null;
+    APIGatewayProxyResponseEvent response;
     try {
-      response = APIResponseCreator.buildSuccessfulResponseEvent(HttpStatus.SC_OK, new ResponseCertificates(new ArrayList<>()).toJSON());
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
+      response = getCertificates(context);
+    } catch (Exception e) {
       response = handleError(e, HttpStatus.SC_INTERNAL_SERVER_ERROR);
     }
-
 
     return response;
   }
@@ -44,11 +41,13 @@ public class GetCertificates implements RequestHandler<APIGatewayProxyRequestEve
       APIGatewayProxyResponseEvent response = APIResponseCreator.buildSuccessfulResponseEvent(HttpStatus.SC_OK, new ResponseCertificates(certificates).toJSON());
       return response;
     } catch (JsonProcessingException e) {
+      System.out.println(e.getMessage());
       return handleError(e, HttpStatus.SC_INTERNAL_SERVER_ERROR);
     }
   }
 
   private List<ResponseCertificate> getCertificatesFromDb() {
+    System.out.println("Trying to get certificates from db");
     return DatabaseHandler.getInstance().findAllCertificates().stream().map(ResponseCertificate::new).collect(Collectors.toList());
   }
 

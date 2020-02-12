@@ -83,6 +83,7 @@ public class DynamoDbRepository<T, K> implements Repository<T, K> {
   }
 
   public PaginatedScanList<T> findAll(Class<T> clazz) {
+    System.out.println("Trying to query certificates");
     return getMapper().scan(clazz, dynamoDBScanExpression);
   }
 
