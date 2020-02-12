@@ -51,6 +51,7 @@ public final class DatabaseHandler {
 
   @VisibleForTesting
   public void setDynamoDBClient(AmazonDynamoDB dynamoDBClient) {
+    System.out.println("Successfully overwrote dynamoDbClient");
     this.dynamoDBClient = dynamoDBClient;
     this.certificateRepository = new DynamoDbRepository<>(dynamoDBClient, Certificate.class, CERTIFICATE_TABLE_NAME);
   }
