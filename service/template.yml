@@ -9,6 +9,11 @@ Parameters:
     Default: "MISSINGBUILDID"
 
 Resources:
+  NestedDatabase:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: "nested-db.template.yml"
+
   GetCertificates:
     Type: 'AWS::Serverless::Function'
     Properties:
