@@ -34,7 +34,7 @@ jobs:
           --template-file database-output.yaml \
           --stack-name multi-stack-poc-db \
           --s3-bucket wirelesscar-multi-stack-poc-serverless-deployment-bucket \
-          --capabilities CAPABILITY_NAMED_IAM \
+          --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND \
           --no-fail-on-empty-changeset
 
     - name: Setup Java JDK
