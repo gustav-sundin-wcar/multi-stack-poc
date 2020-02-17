@@ -22,6 +22,21 @@ jobs:
         aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
         aws-region: eu-west-1
 
+    - name: Setup Java JDK
+      uses: actions/setup-java@v1.3.0
+      with:
+        java-version: 1.8
+
+    - name: Build java files
+      run: |
+        cd service
+        mvn package
+
+    - name: Upload to S3 Bucket
+      run: |
+        cd service/target
+        aws s3 cp multi-stack-poc-shaded-0-SNAPSHOT.jar s3://wirelesscar-multi-stack-poc-serverless-deployment-bucket/multi-stack-poc-shaded-${GITHUB_SHA}-SNAPSHOT.jar
+
     - name: Cloudformation Database Deploy
       run: |
         cd database
@@ -36,21 +51,6 @@ jobs:
           --s3-bucket wirelesscar-multi-stack-poc-serverless-deployment-bucket \
           --capabilities CAPABILITY_NAMED_IAM \
           --no-fail-on-empty-changeset
-
-    - name: Setup Java JDK
-      uses: actions/setup-java@v1.3.0
-      with:
-        java-version: 1.8
-        
-    - name: Build java files
-      run: |
-        cd service
-        mvn package
-        
-    - name: Upload to S3 Bucket
-      run: |
-        cd service/target
-        aws s3 cp multi-stack-poc-shaded-0-SNAPSHOT.jar s3://wirelesscar-multi-stack-poc-serverless-deployment-bucket/multi-stack-poc-shaded-${GITHUB_SHA}-SNAPSHOT.jar
         
     - name: Cloudformation Deploy
       run: |
@@ -66,6 +66,5 @@ jobs:
           --s3-bucket wirelesscar-multi-stack-poc-serverless-deployment-bucket \
           --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND \
           --parameter-overrides BuildId=$GITHUB_SHA \
-          --no-fail-on-empty-changeset \
-          --stack-policy-body policy.yml
+          --no-fail-on-empty-changeset
  
