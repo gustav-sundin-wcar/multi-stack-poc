@@ -66,5 +66,6 @@ jobs:
           --s3-bucket wirelesscar-multi-stack-poc-serverless-deployment-bucket \
           --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND \
           --parameter-overrides BuildId=$GITHUB_SHA \
-          --no-fail-on-empty-changeset
+          --no-fail-on-empty-changeset \
+          --stack-policy-body policy.yml
  
