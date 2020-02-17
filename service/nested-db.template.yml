@@ -6,9 +6,9 @@ Description: Secondary nested DynamoDB for multi-stack-poc
 Resources:
   CertificatesTable:
     Type: 'AWS::DynamoDB::Table'
-    DeletionPolicy: Retain
+    # DeletionPolicy: Retain
     Properties:
-      TableName: !Sub 'nested-multi-stack-poc-truststorecontainer-service-certificates'
+      TableName: !Sub 'nested-multi-stack-poc-truststorecontainer-service-certificates-risky'
       PointInTimeRecoverySpecification:
         PointInTimeRecoveryEnabled: true
       AttributeDefinitions:
