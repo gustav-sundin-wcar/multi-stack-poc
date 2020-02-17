@@ -8,7 +8,7 @@ Resources:
     Type: 'AWS::DynamoDB::Table'
     # DeletionPolicy: Retain
     Properties:
-      TableName: !Sub 'nested-multi-stack-poc-truststorecontainer-service-certificates-risky'
+      TableName: !Sub 'nested-multi-stack-poc-truststorecontainer-service-certificates'
       PointInTimeRecoverySpecification:
         PointInTimeRecoveryEnabled: true
       AttributeDefinitions:
