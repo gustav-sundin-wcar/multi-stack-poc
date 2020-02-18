@@ -1,0 +1,12 @@
+on:
+  push:
+    branches:
+      - niclas_test
+
+jobs:
+  greet:
+    name: "This is a job called greet"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Greet the world"
+        run: echo "Hello World"
